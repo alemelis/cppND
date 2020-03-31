@@ -2,7 +2,7 @@
 
 ### Foundations
 
-**Project** [openstreetmap Route Planner](route-planning)
+**Project** [OpenStreetMap Route Planner](route-planning)
 
 ### OOP
 
