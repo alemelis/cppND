@@ -1,16 +1,17 @@
-image: gcc
+image: ubuntu:18.04
 
 before_script:
-  - apt-get update && apt-get install -y \
-    cmake build-essential libcairo2-dev \
-    libgraphicsmagick1-dev libpng-dev git
+  - apt-get update 
+  - apt-get install -y \
+      cmake build-essential libcairo2-dev \
+      libgraphicsmagick1-dev libpng-dev git
+  - git clone --recurse-submodules https://github.com/cpp-io2d/P0267_RefImpl && \
+      cd P0267_RefImpl && mkdir Debug && cd Debug && \
+      cmake --config Debug "-DCMAKE_BUILD_TYPE=Debug" .. && cmake --build . && \
+      make install && cd ../..
 
 build_linux:
   stage: build
   script:
-    - git clone --recurse-submodules https://github.com/cpp-io2d/P0267_RefImpl && \
-      cd P0267_RefImpl && mkdir Debug && cd Debug && \
-      cmake --config Debug "-DCMAKE_BUILD_TYPE=Debug" .. && cmake --build . && \
-      make install && cd ../..
     - cd route-planning && mkdir build && cd build && cmake .. && make
     - ./test
