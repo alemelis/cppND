@@ -13,6 +13,4 @@ build_linux:
       cmake --config Debug "-DCMAKE_BUILD_TYPE=Debug" .. && cmake --build . && \
       make install && cd ../..
     - cd route-planning && mkdir build && cd build && cmake .. && make
-
-test:
-  - ./test
+    - ./test
