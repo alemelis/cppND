@@ -66,6 +66,27 @@ long parseJiffies(string filename, string kind_of_jiffies) {
   return 0;
 }
 
+// http://www.martinbroadhurst.com/how-to-split-a-string-in-c.html
+// https://www.cplusplus.com/reference/string/stol/
+long parseStat(string filename, int idx) {
+  string line;
+  std::ifstream stream(filename);
+  if (stream.is_open()) {
+    std::getline(stream, line);
+  }
+  std::stringstream ss(line);
+  std::string token;
+  std::vector<string> vec;
+  int counter = 0;
+  while (getline(ss, token, ' ')) {
+    if (counter == idx) {
+      return std::stol(token);
+    }
+    counter++;
+  }
+  return 0;
+}
+
 // An example of how to read data from the filesystem
 string LinuxParser::OperatingSystem() {
   string line;
@@ -156,9 +177,6 @@ long LinuxParser::IdleJiffies() {
   return parseJiffies(kProcDirectory + kStatFilename, "idle");
 }
 
-// TODO: Read and return CPU utilization
-vector<string> LinuxParser::CpuUtilization() { return {}; }
-
 // Read and return the total number of processes
 int LinuxParser::TotalProcesses() {
   return readMultiLiner<int>(kProcDirectory + kStatFilename, "processes");
@@ -167,6 +185,18 @@ int LinuxParser::TotalProcesses() {
 // Read and return the number of running processes
 int LinuxParser::RunningProcesses() {
   return readMultiLiner<int>(kProcDirectory + kStatFilename, "procs_running");
+}
+
+// TODO: Read and return CPU utilization
+float LinuxParser::CpuUtilization(int pid) {
+  long utime =
+      parseStat(kProcDirectory + std::to_string(pid) + kStatFilename, 13);
+  long stime =
+      parseStat(kProcDirectory + std::to_string(pid) + kStatFilename, 14);
+  long total_time = (utime + stime) / sysconf(_SC_CLK_TCK);
+  long seconds = LinuxParser::UpTime(pid);
+  float cpu = 100.0 * total_time / seconds;
+  return cpu;
 }
 
 // Read and return the command associated with a process
@@ -185,9 +215,12 @@ string LinuxParser::Ram(int pid) {
   return ram;
 }
 
-// TODO: Read and return the user ID associated with a process
-// REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::Uid(int pid [[maybe_unused]]) { return string(); }
+// Read and return the user ID associated with a process
+string LinuxParser::Uid(int pid) {
+  int uid = readMultiLiner<int>(
+      kProcDirectory + std::to_string(pid) + kStatusFilename, "Uid:");
+  return std::to_string(uid);
+}
 
 // TODO: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
@@ -195,22 +228,8 @@ string LinuxParser::User(int pid [[maybe_unused]]) { return string(); }
 
 // Read and return the uptime of a process
 // http://man7.org/linux/man-pages/man5/proc.5.html
-// http://www.martinbroadhurst.com/how-to-split-a-string-in-c.html
-// https://www.cplusplus.com/reference/string/stol/
 long LinuxParser::UpTime(int pid) {
-  string line;
-  std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatFilename);
-  if (stream.is_open()) {
-    std::getline(stream, line);
-  }
-  std::stringstream ss(line);
-  std::string token;
-  int count = 0;
-  while (getline(ss, token, ' ')) {
-    if (count == 21) {
-      return LinuxParser::UpTime() - std::stol(token)/sysconf(_SC_CLK_TCK);
-    }
-    count++;
-  }
-  return 0;
+  long val =
+      parseStat(kProcDirectory + std::to_string(pid) + kStatFilename, 21);
+  return LinuxParser::UpTime() - val / sysconf(_SC_CLK_TCK);
 }
