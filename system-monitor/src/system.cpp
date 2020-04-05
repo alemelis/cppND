@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 #include <cstddef>
+#include <iostream>
 #include <set>
 #include <string>
 #include <vector>
@@ -27,11 +28,10 @@ vector<Process>& System::Processes() {
   vector<int> sys_pids = LinuxParser::Pids();
   vector<Process> processes;
   for (unsigned int i = 0; i < sys_pids.size(); i++) {
-    int pid = sys_pids[i];
-    pid++;
-    // Process p(pid, LinuxParser::User(pid), cmd, cpu, ram, uptime);
+    Process p(sys_pids[i]);
+    processes.push_back(p);
   }
-
+  processes_ = processes;
   return processes_;
 }
 
