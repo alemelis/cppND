@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
+#include <math.h>
 
 #include "linux_parser.h"
 
@@ -26,6 +27,19 @@ T readMultiLiner(string filename, string key_str) {
     }
   }
   return T{0};
+}
+
+template <typename T>
+T readOneLiner(string filename) {
+  T value;
+  string line;
+  std::ifstream stream(filename);
+  if (stream.is_open()) {
+    std::getline(stream, line);
+    std::istringstream linestream(line);
+    linestream >> value;
+  }
+  return value;
 }
 
 // An example of how to read data from the filesystem
@@ -94,8 +108,10 @@ float LinuxParser::MemoryUtilization() {
   return (memtotal - memfree) / memtotal;
 }
 
-// TODO: Read and return the system uptime
-long LinuxParser::UpTime() { return 0; }
+// Read and return the system uptime
+long LinuxParser::UpTime() {
+  return std::round(readOneLiner<long>(kProcDirectory + kUptimeFilename));
+}
 
 // TODO: Read and return the number of jiffies for the system
 long LinuxParser::Jiffies() { return 0; }
