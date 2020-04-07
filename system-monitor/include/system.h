@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+
 #include "linux_parser.h"
 #include "process.h"
 #include "processor.h"
@@ -13,19 +14,20 @@ class System {
     kernel_ = LinuxParser::Kernel();
     os_ = LinuxParser::OperatingSystem();
   };
+
   Processor& Cpu();                   // TODO: See src/system.cpp
   std::vector<Process>& Processes();  // TODO: See src/system.cpp
-  float MemoryUtilization();          // TODO: See src/system.cpp
-  long UpTime();                      // TODO: See src/system.cpp
-  int TotalProcesses();               // TODO: See src/system.cpp
-  int RunningProcesses();             // TODO: See src/system.cpp
-  std::string Kernel();               // TODO: See src/system.cpp
-  std::string OperatingSystem();      // TODO: See src/system.cpp
+  float MemoryUtilization();
+  long UpTime();
+  int TotalProcesses();
+  int RunningProcesses();
+  std::string Kernel();
+  std::string OperatingSystem();
 
-  // TODO: Define any necessary private members
  private:
   Processor cpu_ = {};
   std::vector<Process> processes_ = {};
+
   std::string kernel_;
   std::string os_;
 };

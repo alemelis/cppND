@@ -5,15 +5,15 @@
 
 class Processor {
  public:
- 	Processor() {
- 		tot_ = LinuxParser::Jiffies();
- 		active_ = LinuxParser::ActiveJiffies();
- 	}
+  Processor() {
+    tot_ = LinuxParser::Jiffies();
+    active_ = LinuxParser::ActiveJiffies();
+  }
   float Utilization();
 
  private:
- 	long tot_;
- 	long active_;
+  long tot_;
+  long active_;
 };
 
 #endif
