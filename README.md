@@ -2,23 +2,28 @@
 
 ### Foundations
 
-- C++ syntax
-- Variables, functions, and containers
+- C++ syntax, variables, functions, and containers
 - A* algorithm on ASCII grid
-- Header files
-- Pointers and references
-- Build tools
-- Intro to classes and OOP
+- Build tools, header files, pointers and references
 
 **Project**: [OpenStreetMap Route Planner](route-planning)
 
 ![img](imgs/p1.png)
 
-### OOP
+### Object-Oriented Programming
 
-### Memory Management
+- Structures and classes
+- Encapsulation and abstraction
+- Inheritance and polymorphism
+- Overriding, overloading, and virtual functions
+
+**Project**: [Linux System Monitor](system-monitor)
+
+![img](imgs/p2.png)
+
+<!-- ### Memory Management
 
 ### Concurrency
 
-### Capstone
+### Capstone -->
 
