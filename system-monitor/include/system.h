@@ -11,6 +11,7 @@ class System {
  public:
   System() {
     kernel_ = LinuxParser::Kernel();
+    os_ = LinuxParser::OperatingSystem();
   };
   Processor& Cpu();                   // TODO: See src/system.cpp
   std::vector<Process>& Processes();  // TODO: See src/system.cpp
@@ -26,6 +27,7 @@ class System {
   Processor cpu_ = {};
   std::vector<Process> processes_ = {};
   std::string kernel_;
+  std::string os_;
 };
 
 #endif
