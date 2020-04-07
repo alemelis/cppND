@@ -15,8 +15,8 @@ class System {
     os_ = LinuxParser::OperatingSystem();
   };
 
-  Processor& Cpu();                   // TODO: See src/system.cpp
-  std::vector<Process>& Processes();  // TODO: See src/system.cpp
+  Processor& Cpu();
+  std::vector<Process>& Processes();
   float MemoryUtilization();
   long UpTime();
   int TotalProcesses();
