@@ -10,6 +10,24 @@ using std::string;
 using std::to_string;
 using std::vector;
 
+template <typename T>
+T readMultiLiner(string filename, string key_str) {
+  string line, key;
+  T value;
+  std::ifstream filestream(filename);
+  if (filestream.is_open()) {
+    while (std::getline(filestream, line)) {
+      std::istringstream linestream(line);
+      while (linestream >> key >> value) {
+        if (key == key_str) {
+          return value;
+        }
+      }
+    }
+  }
+  return T{0};
+}
+
 // An example of how to read data from the filesystem
 string LinuxParser::OperatingSystem() {
   string line;
@@ -66,8 +84,15 @@ vector<int> LinuxParser::Pids() {
   return pids;
 }
 
-// TODO: Read and return the system memory utilization
-float LinuxParser::MemoryUtilization() { return 0.0; }
+// Read and return the system memory utilization
+float LinuxParser::MemoryUtilization() {
+  float memtotal =
+      readMultiLiner<float>(kProcDirectory + kMeminfoFilename, "MemTotal:");
+  float memfree =
+      readMultiLiner<float>(kProcDirectory + kMeminfoFilename, "MemFree:");
+
+  return (memtotal - memfree) / memtotal;
+}
 
 // TODO: Read and return the system uptime
 long LinuxParser::UpTime() { return 0; }
