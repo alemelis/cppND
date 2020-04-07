@@ -6,14 +6,18 @@
 class Processor {
  public:
   Processor() {
-    tot_ = LinuxParser::Jiffies();
-    active_ = LinuxParser::ActiveJiffies();
+    jiffies_ = LinuxParser::Jiffies();
+    tot_ = ComputeTotalJiffies_();
+    idle_ = ComputeIdleJiffies_();
   }
   float Utilization();
 
  private:
-  long tot_;
-  long active_;
+  std::vector<float> jiffies_;
+  float ComputeTotalJiffies_();
+  float ComputeIdleJiffies_();
+  float tot_;
+  float idle_;
 };
 
 #endif

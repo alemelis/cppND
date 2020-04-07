@@ -10,7 +10,7 @@ build:
 	mkdir -p build
 	cd build && \
 	cmake .. && \
-	make -j10
+	make -j$(noproc)
 
 .PHONY: debug
 debug:

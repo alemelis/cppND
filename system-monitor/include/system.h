@@ -14,7 +14,6 @@ class System {
     kernel_ = LinuxParser::Kernel();
     os_ = LinuxParser::OperatingSystem();
   };
-
   Processor& Cpu();
   std::vector<Process>& Processes();
   float MemoryUtilization();
@@ -27,7 +26,6 @@ class System {
  private:
   Processor cpu_ = {};
   std::vector<Process> processes_ = {};
-
   std::string kernel_;
   std::string os_;
 };

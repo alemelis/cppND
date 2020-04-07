@@ -3,25 +3,41 @@
 
 #include <string>
 
-/*
-Basic class for Process representation
-It contains relevant attributes as shown below
-*/
+#include "linux_parser.h"
+
 class Process {
  public:
- 	Process(int pid) : pid_(pid) {}
-  int Pid();
-  std::string User();                      // TODO: See src/process.cpp
-  std::string Command();                   // TODO: See src/process.cpp
-  float CpuUtilization();                  // TODO: See src/process.cpp
-  std::string Ram();                       // TODO: See src/process.cpp
-  long int UpTime();                       // TODO: See src/process.cpp
-  bool operator<(Process const& a) const;  // TODO: See src/process.cpp
+  Process(int pid) : pid_(pid) {
+    if (pid_ == 0) {
+      cmd_ = std::string();
+      uid_ = std::string();
+      user_ = std::string();
+      uptime_ = 0;
+      cpu_ = 0.0;
+    } else {
+      cmd_ = LinuxParser::Command(pid_);
+      uid_ = LinuxParser::Uid(pid_);
+      user_ = LinuxParser::User(pid_);
+      uptime_ = LinuxParser::UpTime(pid_);
+      cpu_ = LinuxParser::CpuUtilization(pid_);
+    }
+  }
 
-  // TODO: Declare any necessary private members
+  int Pid();
+  std::string User();
+  std::string Command();
+  float CpuUtilization();
+  std::string Ram();
+  long int UpTime();
+  bool operator<(Process const& a) const;
+
  private:
- 	int pid_;
- 	// std::string cmd_;
+  int pid_;
+  std::string cmd_;
+  std::string uid_;
+  std::string user_;
+  long uptime_;
+  float cpu_;
 };
 
 #endif
