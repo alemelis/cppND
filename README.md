@@ -21,9 +21,20 @@
 
 ![img](imgs/p2.png)
 
-<!-- ### Memory Management
+### Memory Management
 
-### Concurrency
+- Memory addresses, hex, and memory types
+- Using a debugger
+- The stack and the heap
+- Call-by-value and call-by-reference
+- malloc and free, new and delete
+- Copy semantics, lvalues and rvalues, and move semantics
+- Resource Acquisition Is Initialisation (RAII)
+- Smart pointers
 
-### Capstone -->
+**Project**: [Memory Management Chatbot](membot)
 
+<!-- ### Concurrency
+
+### Capstone
+ -->
