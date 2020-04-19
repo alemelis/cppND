@@ -34,11 +34,20 @@
 
 **Project**: [Memory Management Chatbot](membot)
 
-<!-- ### Concurrency -->
+### Concurrency
+
+- Threads and tasks
+- Variadic templates
+- Fork-join parallelism
+- Promises and futures
+- Mutex, locks, and message queues
+
+**Project**: [Traffic Simulation](traffic-sim)
+
+![img](imgs/p3.png)
 
 ### Capstone
 
 **Project** [Ray Tracing Renderer](ray-tracer)
 
 ![img](ray-tracer/rendering.png)
-
