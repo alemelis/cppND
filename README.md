@@ -34,7 +34,11 @@
 
 **Project**: [Memory Management Chatbot](membot)
 
-<!-- ### Concurrency
+<!-- ### Concurrency -->
 
 ### Capstone
- -->
+
+**Project** [Ray Tracing Renderer](ray-tracer)
+
+![img](ray-tracer/rendering.png)
+
